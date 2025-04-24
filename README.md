@@ -1,4 +1,3 @@
-```
 Library Seat Reservation System (CLI)
 ====================================
 This project was developed as part of my **CS315: Principles of Database Systems** course at IIT Kanpur.  
@@ -40,14 +39,13 @@ Setup Instructions
 
 3. **Configure environment**:
    - Create `.env` file in `/backend` with:
-     ```
      DB_HOST=your_postgres_host
      DB_PORT=your_postgres_port
      DB_USER=your_username
      DB_PASSWORD=your_password
      DB_NAME=your_database_name
      JWT_SECRET=your_jwt_secret
-     ```
+
    - For Supabase: Use credentials from your project dashboard
 
 4. **Initialize database**:
