@@ -1,66 +1,81 @@
+Sure! Here's the full `README.txt` content in plain text format — just copy and paste it into your `README.txt` or `README.md` file as needed:
+
+```
 Library Seat Reservation System (CLI)
-A command-line based solution for managing library seat bookings at IITK. Students can reserve seats in advance with QR verification, while admins can oversee reservations and adjust library hours.
+====================================
+This project was developed as part of my **CS315: Principles of Database Systems** course at IIT Kanpur.  
+It is a command-line based solution for managing library seat bookings at IITK. Students can reserve seats in advance with QR verification, while admins can oversee reservations and adjust library hours.
+
 Features
-Student Portal:
+--------
+- **Student Portal**:
+  - Real-time seat availability
+  - Individual/group bookings
+  - QR code validation
+  - Reservation history
 
-Real-time seat availability
-
-Individual/group bookings
-
-QR code validation
-
-Reservation history
-Admin Portal:
-
-Live seat monitoring
-
-QR-based check-ins
-
-Library hour adjustments
-
-Student booking lookup
+- **Admin Portal**:
+  - Live seat monitoring
+  - QR-based check-ins
+  - Library hour adjustments
+  - Student booking lookup
 
 Setup Instructions
-Prerequisites
-Node.js (v16+)
+------------------
 
-PostgreSQL (local or Supabase)
+### Prerequisites
+- Node.js (v16+)
+- PostgreSQL (local or Supabase)
+- npm
 
-npm
+### Installation
+1. **Clone the repository**:
+   ```
+   git clone https://github.com/KreyulTWSA/CS315-Library-Seat-Reservation.git
+   cd CS315-Library-Seat-Reservation/backend
+   ```
 
-Installation
-Clone the repository:
-git clone https://github.com/KreyulTWSA/CS315-Library-Seat-Reservation.git
-cd CS315-Library-Seat-Reservation/backend
-Install dependencies:
-npm install
-Configure environment:
-Create .env file in /backend with:
-DB_HOST=your_postgres_host
-DB_PORT=your_postgres_port
-DB_USER=your_username
-DB_PASSWORD=your_password
-DB_NAME=your_database_name
-JWT_SECRET=your_jwt_secret
-For Supabase: Use credentials from your project dashboard
+2. **Install dependencies**:
+   ```
+   npm install
+   ```
 
-Initialize database:
+3. **Configure environment**:
+   - Create `.env` file in `/backend` with:
+     ```
+     DB_HOST=your_postgres_host
+     DB_PORT=your_postgres_port
+     DB_USER=your_username
+     DB_PASSWORD=your_password
+     DB_NAME=your_database_name
+     JWT_SECRET=your_jwt_secret
+     ```
+   - For Supabase: Use credentials from your project dashboard
 
-Run schema.sql from database folder in your PostgreSQL client to create tables
+4. **Initialize database**:
+   - Run `schema.sql` in your PostgreSQL client to create tables
 
 Running the System
-bash
+------------------
+```
 node cli/cli.js
+```
 
 Usage
-Main Menu
+-----
+
+### Main Menu
+```
 Welcome! What do you want to do?
 > Login as Student 
   Login as Admin 
   Signup as Student 
   Create a New Admin (Super Admin only) 
   Exit
-Student Dashboard
+```
+
+### Student Dashboard
+```
 Student Dashboard - Choose an action:
 > View Seat Layout 
   Book a Seat
@@ -70,7 +85,10 @@ Student Dashboard - Choose an action:
   Delete an active Reservation
   End the Session
   Logout
-Admin Dashboard
+```
+
+### Admin Dashboard
+```
 Admin Dashboard - Select an option:
 > View Seat Layout 
   Update Library Hours
@@ -78,9 +96,11 @@ Admin Dashboard - Select an option:
   Claim Group Reservation (QR)
   View Student Reservation History
   Logout
+```
+
 Troubleshooting
-Ensure PostgreSQL is running before starting the CLI
-
-Verify .env credentials match your database
-
-Delete node_modules and re-run npm install if dependency errors occur
+---------------
+- Ensure PostgreSQL is running before starting the CLI
+- Verify `.env` credentials match your database
+- Delete `node_modules` and re-run `npm install` if dependency errors occur
+```
