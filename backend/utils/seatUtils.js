@@ -10,6 +10,17 @@ async function isSeatFree(seat_id) {
   return true; 
 }
 
+async function getSeatData() {
+  const result = await pool.query(
+    `SELECT seat_id, seat_row, seat_col, seat_status 
+     FROM Seats 
+     ORDER BY seat_row, seat_col`
+  );
+
+  return result.rows;
+};
+
 module.exports = {
   isSeatFree,
+  getSeatData
 };

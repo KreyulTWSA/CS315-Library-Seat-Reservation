@@ -1,17 +1,13 @@
-const pool = require('../config/db');
+const { getSeatData } = require('../utils/seatUtils');
 
 // Returns the entire seat layout with row, column, and status
 exports.getSeatLayout = async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT seat_id, seat_row, seat_col, seat_status 
-       FROM Seats 
-       ORDER BY seat_row, seat_col`
-    );
+    const seatRows = await getSeatData();
 
     const layout = {};
 
-    for (const seat of result.rows) {
+    for (const seat of seatRows) {
       const row = seat.seat_row;
       if (!layout[row]) layout[row] = [];
 

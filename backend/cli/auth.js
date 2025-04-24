@@ -1,6 +1,7 @@
 const axios = require('axios');
 const inquirer = require('inquirer');
 const { studentDashboard } = require('./studentDashboard');
+const { adminDashboard } = require('./adminDashboard');
 
 const studentLogin = async () => {
   const creds = await inquirer.prompt([

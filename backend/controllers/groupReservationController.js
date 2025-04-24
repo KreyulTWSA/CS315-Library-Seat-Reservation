@@ -35,6 +35,7 @@ exports.bookGroupReservation = async (req, res) => {
       [group_name]
     );
     
+    
     if (groupResult.rows.length === 0) {
       return res.status(404).json({ error: 'Group not found' });
     }

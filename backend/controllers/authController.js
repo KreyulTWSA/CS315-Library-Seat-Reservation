@@ -1,18 +1,15 @@
 const bcrypt = require('bcrypt');
 const pool = require('../config/db');
 const jwt = require('jsonwebtoken');
+const { hashPassword,
+  comparePasswords,
+  createUser,
+  getUserByEmail,
+  userExists,
+  createStudent,
+  createAdminProfile
+}  = require('../utils/authUtils');
 
-// Helper Function: Hash the password with bcrypt
-async function hashPassword(password) {
-  const saltRounds = 10;
-  return await bcrypt.hash(password, saltRounds);
-}
-
-// Helper Function: Compare plain password with hashed password
-async function comparePasswords(plainPassword, hashedPassword) {
-    return await bcrypt.compare(plainPassword, hashedPassword);
-  }
-  
 // Generate JWT token for authentication
 function generateToken(userId, role, email, roll_number = null) {
   const payload = { userId, role, email, roll_number };
@@ -24,32 +21,21 @@ function generateToken(userId, role, email, roll_number = null) {
 exports.signup = async (req, res) => {
   try {
     const { naam, email, password, roll_number } = req.body;
-
+    
+    // Validating input
     if (!naam || !email || !password || !roll_number) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     // Check if user already exists
-    const existingUser = await pool.query('SELECT * FROM Users WHERE email = $1', [email]);
-    if (existingUser.rowCount > 0) {
+    if (await userExists(email)) {
       return res.status(400).json({ error: 'User with this email already exists' });
     }
+    
+    const hashed = await hashPassword(password);
+    const userId = await createUser(email, naam, hashed, 'student');
 
-    const hashedPassword = await hashPassword(password);
-
-    // Insert user into Users table
-    const userResult = await pool.query(
-      'INSERT INTO Users (email, naam, hashpassword, user_role) VALUES ($1, $2, $3, $4) RETURNING user_id',
-      [email, naam, hashedPassword, 'student']
-    );
-
-    const userId = userResult.rows[0].user_id;
-
-    // Create student record
-    await pool.query(
-      'INSERT INTO Students (user_id, roll_number) VALUES ($1, $2)',
-      [userId, roll_number]
-    );
+    await createStudent(userId, roll_number);
 
     res.status(201).json({ message: 'Student registered successfully' });
   } catch (err) {
@@ -67,17 +53,9 @@ exports.login = async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Check if user exists
-    const userResult = await pool.query('SELECT * FROM Users WHERE email = $1', [email]);
-    if (userResult.rowCount === 0) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-
-    const user = userResult.rows[0];
-
-    // Validating password
-    const isPasswordValid = await comparePasswords(password, user.hashpassword);
-    if (!isPasswordValid) {
+    // Check if user exists 
+    const user = await getUserByEmail(email);
+    if (!user || !(await comparePasswords(password, user.hashpassword))) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
     
@@ -124,19 +102,8 @@ exports.createAdmin = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     
     // Insert into Users table with admin role
-    const result = await pool.query(
-      `INSERT INTO Users (email, naam, hashpassword, user_role)
-       VALUES ($1, $2, $3,'admin') RETURNING user_id`,
-      [email, naam, hashedPassword]
-    );
-
-    const userID = result.rows[0].user_id;
-    // Insert into Admins table
-    await pool.query(
-      `INSERT INTO Admins (user_id)
-       VALUES ($1)`,
-      [userID]
-    );
+    const userID = await createUser(email, naam, hashedPassword, 'admin');
+    await createAdminProfile(userID);   // Insert into Admins table
     
     res.status(201).json({ message: 'Admin created' });
   } catch (err) {
@@ -144,7 +111,6 @@ exports.createAdmin = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 // Admin login
 exports.adminLogin = async (req, res) => {
@@ -160,11 +126,10 @@ exports.adminLogin = async (req, res) => {
     if (userResult.rowCount === 0) {
       return res.status(401).json({ error: 'Invalid email or password for admin' });
     }
-
     const user = userResult.rows[0];
     
     // Validate Password
-    const isPasswordValid = await bcrypt.compare(password, user.hashpassword);
+    const isPasswordValid = await comparePasswords(password, user.hashpassword);
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid email or password for admin' });
     }

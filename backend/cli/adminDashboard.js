@@ -66,8 +66,19 @@ const adminDashboard = async (token) => {
           break;
 
         case 'View Seat Layout':
-          const layout = await axios.get('http://localhost:5000/seats/layout');
-          console.table(layout.data);
+          const res2 = await axios.get(`http://localhost:5000/seats/layout`);
+          const layout = res2.data; 
+
+          const tableFormatted = {};
+
+          for (const row in layout) {
+              tableFormatted[row] = {};
+              layout[row].forEach(seat => {
+                  tableFormatted[row][seat.col] = seat.status;
+              });
+          }
+          console.table(tableFormatted);
+
           break;
 
         case 'Logout':
