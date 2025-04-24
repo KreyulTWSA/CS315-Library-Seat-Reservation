@@ -1,0 +1,13 @@
+pg
+tokenizer
+react-router-dom
+cors
+express-rate-limit
+dotenv
+bcrypt
+qrcode
+nodecron
+jimp@0.16.1
+qrcode-reader
+inquirer@6
+axios
