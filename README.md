@@ -1,5 +1,3 @@
-Sure! Here's the full `README.txt` content in plain text format — just copy and paste it into your `README.txt` or `README.md` file as needed:
-
 ```
 Library Seat Reservation System (CLI)
 ====================================
@@ -30,15 +28,15 @@ Setup Instructions
 
 ### Installation
 1. **Clone the repository**:
-   ```
+   
    git clone https://github.com/KreyulTWSA/CS315-Library-Seat-Reservation.git
    cd CS315-Library-Seat-Reservation/backend
-   ```
+   
 
 2. **Install dependencies**:
-   ```
+   
    npm install
-   ```
+   
 
 3. **Configure environment**:
    - Create `.env` file in `/backend` with:
@@ -57,25 +55,24 @@ Setup Instructions
 
 Running the System
 ------------------
-```
+
 node cli/cli.js
-```
+
 
 Usage
 -----
 
 ### Main Menu
-```
+
 Welcome! What do you want to do?
 > Login as Student 
   Login as Admin 
   Signup as Student 
   Create a New Admin (Super Admin only) 
   Exit
-```
 
 ### Student Dashboard
-```
+
 Student Dashboard - Choose an action:
 > View Seat Layout 
   Book a Seat
@@ -85,10 +82,10 @@ Student Dashboard - Choose an action:
   Delete an active Reservation
   End the Session
   Logout
-```
+
 
 ### Admin Dashboard
-```
+
 Admin Dashboard - Select an option:
 > View Seat Layout 
   Update Library Hours
@@ -96,11 +93,11 @@ Admin Dashboard - Select an option:
   Claim Group Reservation (QR)
   View Student Reservation History
   Logout
-```
+
 
 Troubleshooting
 ---------------
 - Ensure PostgreSQL is running before starting the CLI
 - Verify `.env` credentials match your database
 - Delete `node_modules` and re-run `npm install` if dependency errors occur
-```
+
