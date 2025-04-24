@@ -27,19 +27,19 @@ Setup Instructions
 
 ### Installation
 1. **Clone the repository**:
-   
+   ```
    git clone https://github.com/KreyulTWSA/CS315-Library-Seat-Reservation.git
    cd CS315-Library-Seat-Reservation/backend
-   
+   ```
 
 2. **Install dependencies**:
-   
+   ```
    npm install
-   
+   ```
 
 3. **Configure environment**:
-   ```
    - Create `.env` file in `/backend` with:
+   ```
      DB_HOST=your_postgres_host
      DB_PORT=your_postgres_port
      DB_USER=your_username
@@ -54,24 +54,25 @@ Setup Instructions
 
 Running the System
 ------------------
-
+```
+cd backend
 node cli/cli.js
-
+```
 
 Usage
 -----
 
 ### Main Menu
-
+```
 Welcome! What do you want to do?
 > Login as Student 
   Login as Admin 
   Signup as Student 
   Create a New Admin (Super Admin only) 
   Exit
-
+```
 ### Student Dashboard
-
+```
 Student Dashboard - Choose an action:
 > View Seat Layout 
   Book a Seat
@@ -81,10 +82,10 @@ Student Dashboard - Choose an action:
   Delete an active Reservation
   End the Session
   Logout
-
+```
 
 ### Admin Dashboard
-
+```
 Admin Dashboard - Select an option:
 > View Seat Layout 
   Update Library Hours
@@ -92,7 +93,7 @@ Admin Dashboard - Select an option:
   Claim Group Reservation (QR)
   View Student Reservation History
   Logout
-
+```
 
 Troubleshooting
 ---------------
