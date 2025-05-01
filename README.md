@@ -39,7 +39,6 @@ Setup Instructions
 
 3. **Configure environment**:
    - Create `.env` file in `/backend` with:
-     
    ```
      DB_HOST=your_postgres_host
      DB_PORT=your_postgres_port
